@@ -1,0 +1,334 @@
+{
+	"info": {
+		"_postman_id": "0d6169a2-20bf-4061-a7df-dc4651c351da",
+		"name": "Pexels",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search for Photos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 **OK**\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData=JSON.parse(responseBody);\r",
+							"pm.test(\"Include Control is **OK**\",function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"landscape\");\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "563492ad6f91700001000001e1d36b2518e04d5787a9ed672185d089",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.pexels.com/v1/photos/:id",
+					"protocol": "https",
+					"host": [
+						"api",
+						"pexels",
+						"com"
+					],
+					"path": [
+						"v1",
+						"photos",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "572897"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Curated Photos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 **OK**\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is Json format **OK**\",function(){\r",
+							"    pm.response.to.be.json;\r",
+							"})\r",
+							"\r",
+							"pm.test(\"RESPONSE is okey **OK**\",function(){\r",
+							"    pm.response.to.be.success;\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "563492ad6f91700001000001e1d36b2518e04d5787a9ed672185d089",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.pexels.com/v1/curated?per_page=15",
+					"protocol": "https",
+					"host": [
+						"api",
+						"pexels",
+						"com"
+					],
+					"path": [
+						"v1",
+						"curated"
+					],
+					"query": [
+						{
+							"key": "per_page",
+							"value": "15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Next Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 **OK**\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status test **OK**\",function(){\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"})\r",
+							"\r",
+							"\r",
+							"pm.test(\"ID Control checked and **OK**\",()=>{\r",
+							"    const responseJson=pm.response.json();\r",
+							"    pm.expect(responseJson.photos[0].id).to.equal(572897);\r",
+							"})\r",
+							"\r",
+							"let response=pm.response.json();\r",
+							"pm.test(\"photographer_id Control is **OK**\",() => {\r",
+							"  let responseJson=pm.response.json();\r",
+							"  pm.expect(responseJson.photos[0].photographer_id).to.equal(121938);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "563492ad6f91700001000001e1d36b2518e04d5787a9ed672185d089",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.pexels.com/v1/search/?page=2&per_page=1&query=nature",
+					"protocol": "https",
+					"host": [
+						"api",
+						"pexels",
+						"com"
+					],
+					"path": [
+						"v1",
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "per_page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "nature"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get A Photo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 **OK**\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let response=pm.response.json();\r",
+							"pm.test(\"ID Control is **OK**\",function(){\r",
+							"  pm.expect(response.id).is.eql(572897)\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"let jsonData = pm.response.json(),\r",
+							" messages = \r",
+							" [\r",
+							"      \"Response ID Control\" \r",
+							" ]\r",
+							"if (jsonData.id === 572899) \r",
+							" {\r",
+							"    pm.test(`*** E R R O R *** ${jsonData.message}`, () => \r",
+							"    {\r",
+							"        pm.expect(jsonData.id).to.equal(\"error\")\r",
+							"        pm.expect(jsonData.message).to.be.oneOf(messages)\r",
+							"    })\r",
+							" }\r",
+							"else\r",
+							" {\r",
+							"    pm.test(`*** S U C C E S S *** ${jsonData.message}`, () => \r",
+							"    {\r",
+							"        pm.expect(jsonData.id).to.equal(572897)\r",
+							"    })   \r",
+							" }\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "563492ad6f91700001000001e1d36b2518e04d5787a9ed672185d089",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.pexels.com/v1/photos/:id",
+					"protocol": "https",
+					"host": [
+						"api",
+						"pexels",
+						"com"
+					],
+					"path": [
+						"v1",
+						"photos",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "572897"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Videos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 **OK**\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Per_Page control is **OK**\",function(){\r",
+							"    var jsonData=pm.response.json();\r",
+							"    pm.expect(jsonData.per_page).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"URL Control is **OK**\",() =>{\r",
+							"    var jsonData=pm.response.json();\r",
+							"    pm.expect(jsonData.videos[0].url).to.eql(\"https://www.pexels.com/video/drone-view-of-big-waves-rushing-to-the-shore-3571264/\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Include Total_Results is **OK**\",function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"total_results\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "563492ad6f91700001000001e1d36b2518e04d5787a9ed672185d089",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.pexels.com/videos/search?query=nature&per_page=1",
+					"protocol": "https",
+					"host": [
+						"api",
+						"pexels",
+						"com"
+					],
+					"path": [
+						"videos",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "nature"
+						},
+						{
+							"key": "per_page",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
